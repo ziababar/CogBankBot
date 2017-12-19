@@ -19,14 +19,17 @@ namespace CogBankBot
             if (activity.Type == ActivityTypes.Message)
             {
                 await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+                // await Conversation.SendAsync(activity, () => new WineSearchDialog());
             }
             else
             {
                 HandleSystemMessage(activity);
+                // await HandleSystemMessageAsync(activity);
             }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
+        
 
         private Activity HandleSystemMessage(Activity message)
         {
@@ -40,6 +43,20 @@ namespace CogBankBot
                 // Handle conversation state changes, like members being added and removed
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
+
+                //const string WelcomeMessage =
+                //   "Welcome to WineBot! You can type \"catalog\" to search wines.";
+
+                //Func<ChannelAccount, bool> isChatbot =
+                //    channelAcct => channelAcct.Id == message.Recipient.Id;
+
+                //if (message.MembersAdded?.Any(isChatbot) ?? false)
+                //{
+                //    Activity reply = message.CreateReply(WelcomeMessage);
+
+                //    var connector = new ConnectorClient(new Uri(message.ServiceUrl));
+                //    await connector.Conversations.ReplyToActivityAsync(reply);
+                //}
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
