@@ -18,8 +18,8 @@ namespace CogBankBot
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
-                // await Conversation.SendAsync(activity, () => new WineSearchDialog());
+                // await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
+                await Conversation.SendAsync(activity, () => new Dialogs.CogBankBotDialog());
             }
             else
             {
