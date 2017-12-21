@@ -11,14 +11,13 @@ using System.Web.Hosting;
 
 namespace CogBankBot.Dialogs
 {
-//    public class CogBankBotDialog
-//    {
-//    }
-
-
-    [Serializable]
+        [Serializable]
     class CogBankBotDialog : IDialog<object>
     {
+
+        public string transactionType { get; set; }
+        public long transactionAmount { get; set; }
+
 
         public async Task StartAsync(IDialogContext context)
         {
@@ -58,7 +57,7 @@ namespace CogBankBot.Dialogs
         async Task TransactionTypeReceivedAsync(
             IDialogContext context, IAwaitable<string> result)
         {
-            string transactionType = await result;
+            transactionType = await result;
 
             if (transactionType == "Balance Inquiry")
             {
@@ -67,13 +66,46 @@ namespace CogBankBot.Dialogs
             } else if (transactionType == "Funds Transfer")
             {
                 // Funds transfer
-                await context.PostAsync("You selected Funds Transfer");
+                PromptDialog.Number(
+                    context: context,
+                    resume: TransactionFundsTransferAsync,
+                    prompt: "Amount to be transferred?",
+                    retry: "Please enter a number between PKR 1,000 and PRK 150,000.",
+                    attempts: 4);
             }
             else
             {
                 await context.PostAsync("Not valid transaction type");
             }
-        }           
+        }
+
+        async Task TransactionFundsTransferAsync(
+            IDialogContext context, IAwaitable<long> result)
+        {
+            transactionAmount = await result;
+
+            PromptDialog.Confirm(
+                context: context,
+                resume: TransactionFundsTransferConfirmedAsync,
+                prompt: "Confirm funds transfer?",
+                retry: "Please reply with either Yes or No.");
+        }
+
+        async Task TransactionFundsTransferConfirmedAsync(
+            IDialogContext context, IAwaitable<bool> result)
+        {
+            bool transactionConfirm = await result;
+
+            if (transactionConfirm) {
+                await context.PostAsync(
+                    $"You selected Transaction Type: {transactionType}, " +
+                    $"Transaction Amount: {transactionAmount}. ");
+            }
+            else
+            {
+                await context.PostAsync("You cancelled the transaction");
+            }
+        }
 
     }
 }
