@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 using System.Web.Hosting;
 
+using Newtonsoft.Json.Linq;
+
 
 namespace CogBankBot.Dialogs
 {
-        [Serializable]
+    [Serializable]
     class CogBankBotDialog : IDialog<object>
     {
 
@@ -30,21 +33,39 @@ namespace CogBankBot.Dialogs
         {
             var activity = await result;
 
-            
+            string messagePrompt = "What would you like to do?";
+            string messageRetry = "I don't know about that option, please select an option in the list";
+
+
+
             // Check for the message text. If it's a catalog then execute the dialog sequence
             // for this message handling
             if (activity.Text.Contains("transaction"))
             {
                 List<string> transactionsList = TransactionType.CreateTransactionsList();
 
+
+                var promptOptions =
+                    new PromptOptions<string>(
+                        prompt: messagePrompt,
+                        retry: messageRetry,
+                        options: transactionsList,
+                        speak: messagePrompt,
+                        retrySpeak: messageRetry);
+
                 PromptDialog.Choice(
                     context: context,
                     resume: TransactionTypeReceivedAsync,
-                    options: transactionsList,
-                    prompt: "Which type of transaction to perform?",
-                    retry: "Please select a valid transaction type: ",
-                    attempts: 4,
-                    promptStyle: PromptStyle.PerLine);
+                    promptOptions: promptOptions);
+
+                //PromptDialog.Choice(
+                //   context: context,
+                //   resume: TransactionTypeReceivedAsync,
+                //   options: transactionsList,
+                //   prompt: "Which type of transaction to perform?",
+                //   retry: "Please select a valid transaction type: ",
+                //   attempts: 4,
+                //   promptStyle: PromptStyle.PerLine);
             }
             else
             {

@@ -1,7 +1,9 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Linq;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 
@@ -18,20 +20,18 @@ namespace CogBankBot
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                // await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
                 await Conversation.SendAsync(activity, () => new Dialogs.CogBankBotDialog());
             }
             else
             {
-                HandleSystemMessage(activity);
-                // await HandleSystemMessageAsync(activity);
+                await HandleSystemMessageAsync(activity);
             }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
-        
 
-        private Activity HandleSystemMessage(Activity message)
+
+        async Task HandleSystemMessageAsync(Activity message)
         {
             if (message.Type == ActivityTypes.DeleteUserData)
             {
@@ -44,19 +44,19 @@ namespace CogBankBot
                 // Use Activity.MembersAdded and Activity.MembersRemoved and Activity.Action for info
                 // Not available in all channels
 
-                //const string WelcomeMessage =
-                //   "Welcome to WineBot! You can type \"catalog\" to search wines.";
+                const string WelcomeMessage = "Welcome to CogBankBot! You can type \"transaction\" to perform financial transactions.";
 
-                //Func<ChannelAccount, bool> isChatbot =
-                //    channelAcct => channelAcct.Id == message.Recipient.Id;
+                Func<ChannelAccount, bool> isChatbot =
+                    channelAcct => channelAcct.Id == message.Recipient.Id;
 
-                //if (message.MembersAdded?.Any(isChatbot) ?? false)
-                //{
-                //    Activity reply = message.CreateReply(WelcomeMessage);
+                if (message.MembersAdded?.Any(isChatbot) ?? false)
+                {
+                    Activity reply = message.CreateReply(WelcomeMessage);
 
-                //    var connector = new ConnectorClient(new Uri(message.ServiceUrl));
-                //    await connector.Conversations.ReplyToActivityAsync(reply);
-                //}
+                    var connector = new ConnectorClient(new Uri(message.ServiceUrl));
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                    
+                }
             }
             else if (message.Type == ActivityTypes.ContactRelationUpdate)
             {
@@ -70,8 +70,7 @@ namespace CogBankBot
             else if (message.Type == ActivityTypes.Ping)
             {
             }
-
-            return null;
+            
         }
     }
 }
