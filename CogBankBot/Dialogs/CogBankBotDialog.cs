@@ -36,8 +36,7 @@ namespace CogBankBot.Dialogs
             // for this message handling
             if (activity.Text.Contains("transaction"))
             {
-                TransactionType transactionCategories = new TransactionType();
-                List<TransactionType> transactionsList = TransactionType.CreateTransactionsList();
+                List<string> transactionsList = TransactionType.CreateTransactionsList();
 
                 PromptDialog.Choice(
                     context: context,
@@ -57,9 +56,23 @@ namespace CogBankBot.Dialogs
         }
 
         async Task TransactionTypeReceivedAsync(
-            IDialogContext context, IAwaitable<TransactionType> result)
+            IDialogContext context, IAwaitable<string> result)
         {
-            TransactionType transactionType = await result;
+            string transactionType = await result;
+
+            if (transactionType == "Balance Inquiry")
+            {
+                // Balance inquiry
+                await context.PostAsync("You selected Balance Inquiry");
+            } else if (transactionType == "Funds Transfer")
+            {
+                // Funds transfer
+                await context.PostAsync("You selected Funds Transfer");
+            }
+            else
+            {
+                await context.PostAsync("Not valid transaction type");
+            }
         }           
 
     }

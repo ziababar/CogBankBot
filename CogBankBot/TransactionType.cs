@@ -12,9 +12,9 @@ namespace CogBankBot
         public string Name { get; set; }
         public string Description { get; set; }
         
-        public static List<TransactionType> CreateTransactionsList()
+        public static List<string> CreateTransactionsList()
         {
-            List<TransactionType> transactionList = new List<TransactionType>();
+            List<string> transactionList = new List<string>();
 
             TransactionType A = new TransactionType();
             TransactionType B = new TransactionType();
@@ -27,8 +27,8 @@ namespace CogBankBot
             B.Name = "Funds Transfer";
             B.Description = "Transaction for Funds Transfer";
 
-            transactionList.Add(A);
-            transactionList.Add(B);
+            transactionList.Add(A.Name);
+            transactionList.Add(B.Name);
 
             return transactionList;
         }
