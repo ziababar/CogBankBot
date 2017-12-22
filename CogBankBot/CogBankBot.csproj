@@ -126,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="CogBankBotForm.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Dialogs\CogBankBotDialog.cs" />
     <Compile Include="Dialogs\CogBankBotLuisDialog.cs" />

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Linq;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Connector;
 
 namespace CogBankBot
@@ -20,8 +21,9 @@ namespace CogBankBot
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                //await Conversation.SendAsync(activity, () => new Dialogs.CogBankBotDialog());
+                // await Conversation.SendAsync(activity, () => new Dialogs.CogBankBotDialog());
                 await Conversation.SendAsync(activity, () => new Dialogs.CogBankBotLuisDialog());
+                await Conversation.SendAsync(activity, BuildCogBankBotDialog);
             }
             else
             {
@@ -72,6 +74,11 @@ namespace CogBankBot
             {
             }
             
+        }
+
+        IDialog<CogBankBotForm> BuildCogBankBotDialog()
+        {
+            return FormDialog.FromForm(new CogBankBotForm().BuildForm);
         }
     }
 }
