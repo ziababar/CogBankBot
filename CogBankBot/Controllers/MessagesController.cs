@@ -20,7 +20,8 @@ namespace CogBankBot
         {
             if (activity.Type == ActivityTypes.Message)
             {
-                await Conversation.SendAsync(activity, () => new Dialogs.CogBankBotDialog());
+                //await Conversation.SendAsync(activity, () => new Dialogs.CogBankBotDialog());
+                await Conversation.SendAsync(activity, () => new Dialogs.CogBankBotLuisDialog());
             }
             else
             {
