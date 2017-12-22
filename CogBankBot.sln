@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CogBankBot", "CogBankBot\CogBankBot.csproj", "{6BE6906D-A4E7-4ECC-9E99-30F0893CF820}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AILib", "AILib\AILib.csproj", "{1D17A84C-54DF-4502-97AB-9EE5FBEEF94A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6BE6906D-A4E7-4ECC-9E99-30F0893CF820}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BE6906D-A4E7-4ECC-9E99-30F0893CF820}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BE6906D-A4E7-4ECC-9E99-30F0893CF820}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D17A84C-54DF-4502-97AB-9EE5FBEEF94A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D17A84C-54DF-4502-97AB-9EE5FBEEF94A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D17A84C-54DF-4502-97AB-9EE5FBEEF94A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D17A84C-54DF-4502-97AB-9EE5FBEEF94A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

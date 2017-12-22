@@ -10,12 +10,9 @@ using System.Linq;
 
 namespace CogBankBot.Dialogs
 {
-    // [LuisModel("0cd979e7-78a4-4f17-8266-495eb5498ee4", "1460b3b97d9a4273a0172631a04495f4", domain: "westus.api.cognitive.microsoft.com")]
+    [LuisModel("0cd979e7-78a4-4f17-8266-495eb5498ee4", "1460b3b97d9a4273a0172631a04495f4", domain: "westus.api.cognitive.microsoft.com")]
 
-    [LuisModel(
-        modelID: "fce2c458-d12e-47ed-8e4c-36c432e59eee",
-        subscriptionKey: "6c3b2c02cf0145b792ae6538dba840ab",
-        domain: "westus.api.cognitive.microsoft.com")]
+    //[LuisModel(modelID: "fce2c458-d12e-47ed-8e4c-36c432e59eee", subscriptionKey: "6c3b2c02cf0145b792ae6538dba840ab", domain: "westus.api.cognitive.microsoft.com")]
     [Serializable]
     public class CogBankBotLuisDialog : LuisDialog<object>
     {
